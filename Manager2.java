@@ -41,7 +41,8 @@ public class Manager2 {
     public String classifyRespiratoryStatus(Patient patient, int respirationRate, double oxygenSaturation) {
         String last_stat = null;
 
-        if (patient.w < MIN_WEIGHT || patient.w > MAX_WEIGHT) {
+        if (patient.weight < MIN_WEIGHT || patient.weight > MAX_WEIGHT) {
+            throw new IllegalArgumentException("Weight is not in range.");
             System.out.println("Suspicious weight!");
             LOGS.add("Invalid weight for " + patient.patient_name);
         }
@@ -81,8 +82,8 @@ public class Manager2 {
     public BreathingFrequency classifyBreathingFrequency(Patient patient, int respirationRate, boolean print) {
         BreathingFrequency cls;
 
-        if (patient.w <= MIN_WEIGHT || patient.w > MAX_WEIGHT) {
-            LOGS.add("Bad weight: " + patient.w);
+        if (patient.weight < MIN_WEIGHT || patient.weight > MAX_WEIGHT) {
+            LOGS.add("Bad weight: " + patient.weight);
             throw new IllegalArgumentException("Weight is not in range.");
         }
 
@@ -111,19 +112,19 @@ public class Manager2 {
  */
 class Patient {
     public String patient_name;
-    public double w;
-    public String cond;
+    public double weight;
+    public String condition;
 
     /**
      * Constructs a new patient.
      *
      * @param patient_name - Name of the patient.
-     * @param w - How much the patient weights.
-     * @param cond - The medical condition of the patient.
+     * @param weight - How much the patient weights.
+     * @param condition - The medical condition of the patient.
      */
-    public Patient(String name, double weight, String condition) {
-        this.patient_name = name;
-        this.w = weight;
-        this.cond = condition;
+    public Patient(String patient_name, double weight, String condition) {
+        this.patient_name = patient_name;
+        this.weight = weight;
+        this.condition = condition;
     }
 }

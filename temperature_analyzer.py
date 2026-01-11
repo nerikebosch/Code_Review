@@ -42,7 +42,7 @@ class TemperatureAnalyzer:
         self.default_unit = default_unit
 
 
-    def convert_to_celsius(self, temp, unit="None"):
+    def convert_to_celsius(self, temp, unit=None):
         """
         Validates the temperature range and converts it to Celsius.
 
@@ -83,7 +83,7 @@ class TemperatureAnalyzer:
             if scale == "C":
                 fever = temp > self.LOW_FEVER_THRESHOLD
             else:
-                c = self.convert_to_celsius(temp)
+                c = self.convert_to_celsius(temp, scale)
                 fever = c > self.LOW_FEVER_THRESHOLD
 
             return fever
@@ -92,7 +92,7 @@ class TemperatureAnalyzer:
             raise e
 
 
-    def analyze_patient(self, temp, age, verbose=0, emergency_mode=False, log=False, log_file="temp_log.txt", unit="None"):
+    def analyze_patient(self, temp, age, verbose=0, emergency_mode=False, log=False, log_file="temp_log.txt", unit=None):
         """
         Analyzes a patient temperature based on their temperature and age.
 

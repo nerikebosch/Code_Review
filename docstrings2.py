@@ -1,18 +1,18 @@
 HYDRATION_NEED_ML_PER_KG = 30 # amount of water per kg of the body weight.
 ML_TO_LITERS = 1000 # conversion for milliliters to liter.
 
-def check_hydro(bm, ht, act_lvl="mid"):
+def calculate_hydration_needs(body_mass, height, activity_level="mid"):
     """
     Computes hydration needs for the user/patient.
 
     Args:
-        bm (float): Body mass in kilos.
-        ht (float): Height in meters.
-        act_lvl (str): Can be "low", "mid", or "high". Default is "mid".
+        body_mass (float): Body mass in kilos.
+        height (float): Height in meters.
+        activity_level (str): Can be "low", "mid", or "high". Default is "mid".
 
     Returns:
-        (dict):
-        BMI (float): Calculated body mass index.
+        (dict): Contains the files:
+        BMI (float): Calculated body mass index,
         hydration_L (float): Calculated hydration need in liters.
 
     Disclaimer:
@@ -20,26 +20,28 @@ def check_hydro(bm, ht, act_lvl="mid"):
     - This function is for demo purpose only.
     """
 
+    activity_level = activity_level.lower().strip()
+
     valid_levels = ["low", "mid", "high"]
 
-    if act_lvl not in valid_levels:
-        raise ValueError(f"Invalid hydration level: {act_lvl}")
+    if activity_level not in valid_levels:
+        raise ValueError(f"Invalid hydration level: {activity_level}")
 
-    if bm <= 0:
+    if body_mass <= 0:
         raise ValueError("Weight must be positive")
 
-    if ht <= 0:
+    if height <= 0:
         raise ValueError("Height must be positive")
 
-    bmi = bm / (ht ** 2)
+    bmi = body_mass / (height ** 2)
 
-    base = HYDRATION_NEED_ML_PER_KG * bm / ML_TO_LITERS
+    base = HYDRATION_NEED_ML_PER_KG * body_mass / ML_TO_LITERS
 
-    if act_lvl == "low":
+    if activity_level == "low":
         factor = 0.9
-    elif act_lvl == "mid":
+    elif activity_level == "mid":
         factor = 1.0
-    elif act_lvl == "high":
+    elif activity_level == "high":
         factor = 1.2
 
     daily_liters = base * factor
